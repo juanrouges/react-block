@@ -28,7 +28,29 @@ import "./Board.css";
  **/
 
 function Board({ nrows, ncols, chanceLightStartsOn }) {
-  const [board, setBoard] = useState(createBoard());
+  const [board, setBoard] = useState(genBoard());
+
+  function randomBinary() {
+    return Math.round(Math.random());
+  }
+
+  function genRows(n) {
+    let arr = [];
+    for (let i = 0; i < n; i++) {
+      arr.push(!!randomBinary());
+    }
+    return arr;
+  }
+
+  function genBoard() {
+    let board = [];
+    for (let z = 0; z < 6; z++) {
+      board.push(genRows(6));
+    }
+    return board;
+  }
+
+  console.log(board);
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
   function createBoard() {
@@ -42,7 +64,7 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   }
 
   function flipCellsAround(coord) {
-    setBoard(oldBoard => {
+    setBoard((oldBoard) => {
       const [y, x] = coord.split("-").map(Number);
 
       const flipCell = (y, x, boardCopy) => {
@@ -68,6 +90,19 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   // make table board
 
   // TODO
+  return (
+    <table>
+      <tbody>
+        {board.map((row, rKey) => (
+          <tr key={`row-${rKey}`}>
+            {row.map((col, cKey) => (
+              <Cell key={`row-${cKey}`} isLit={col} />
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 }
 
 export default Board;
