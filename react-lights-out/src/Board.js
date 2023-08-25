@@ -28,34 +28,27 @@ import "./Board.css";
  **/
 
 function Board({ nrows, ncols, chanceLightStartsOn }) {
-  const [board, setBoard] = useState(genBoard());
+  const [board, setBoard] = useState(createBoard());
 
   function randomBinary() {
-    return Math.round(Math.random());
+    return Math.random() < chanceLightStartsOn;
   }
 
-  function genRows(n) {
-    let arr = [];
-    for (let i = 0; i < n; i++) {
-      arr.push(!!randomBinary());
+  function genRow(col) {
+    let row = [];
+    for (let i = 0; i < col; i++) {
+      row.push(!!randomBinary());
     }
-    return arr;
+    return row;
   }
-
-  function genBoard() {
-    let board = [];
-    for (let z = 0; z < 6; z++) {
-      board.push(genRows(6));
-    }
-    return board;
-  }
-
-  console.log(board);
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
   function createBoard() {
     let initialBoard = [];
     // TODO: create array-of-arrays of true/false values
+    for (let i = 0; i < nrows; i++) {
+      initialBoard.push(genRow(ncols));
+    }
     return initialBoard;
   }
 
