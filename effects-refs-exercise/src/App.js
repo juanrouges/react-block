@@ -1,20 +1,30 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "./App.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.css';
 
 function App() {
-  const API_URL = "https://deckofcardsapi.com/api/deck";
+  const API_URL = 'https://deckofcardsapi.com/api/deck';
 
-  const [deck, setDeck] = useState("");
-  const [cards, setCards] = useState([]);
+  const [deck, setDeck] = useState('');
+  const [cards, setCards] = useState({
+    count: null,
+    items: [],
+  });
 
   const rotateRand = () => Math.floor(Math.random() * 100) + 1;
 
   async function drawCard() {
+    if (cards.count === 0) {
+      window.alert('No more cards to draw');
+      return;
+    }
     try {
       const { data } = await axios.get(`${API_URL}/${deck}/draw`);
       data.cards[0].angle = rotateRand();
-      setCards((cards) => [...cards, ...data.cards]);
+      setCards((cards) => ({
+        count: data.remaining,
+        items: [...cards.items, ...data.cards],
+      }));
     } catch (err) {
       console.log(err);
     }
@@ -42,9 +52,9 @@ function App() {
       <div>
         <button onClick={drawCard}>Give me a card</button>
         <div className="Deck">
-          {!cards
-            ? "Draw a card!"
-            : cards.map((card) => (
+          {cards.items.length < 1
+            ? 'Draw a card!'
+            : cards.items.map((card) => (
                 <div
                   className="Card"
                   key={card.code}
