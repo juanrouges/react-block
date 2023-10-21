@@ -10,22 +10,25 @@ import {
   ListGroupItem,
 } from "reactstrap";
 
-function FoodMenu({ snacks }) {
+function FoodMenu({ data, category }) {
   return (
     <section className="col-md-4">
       <Card>
         <CardBody>
           <CardTitle className="font-weight-bold text-center">
-            Food Menu
+            {category == "snacks" ? "Snacks" : "Drinks"} Menu
           </CardTitle>
           <CardText>
             Some quick example text to build on the card title and make up the
             bulk of the card's content.
           </CardText>
           <ListGroup>
-            {snacks.map((snack) => (
-              <Link to={`/snacks/${snack.id}`} key={snack.id}>
-                <ListGroupItem>{snack.name}</ListGroupItem>
+            {data.map((item) => (
+              <Link
+                to={`${category == "snacks" ? "snacks" : "drinks"}/${item.id}`}
+                key={item.id}
+              >
+                <ListGroupItem>{item.name}</ListGroupItem>
               </Link>
             ))}
           </ListGroup>
