@@ -46,16 +46,16 @@ function App() {
               <Menu data={snacks} category="snacks" title="Snacks" />
             </Route>
             <Route path="/snacks/:id">
-              <Item items={snacks} cantFind="/snacks" />
+              <Item items={snacks} cantFind="/404" />
             </Route>
             {/* drinks */}
             <Route exact path="/drinks">
               <Menu data={drinks} category="drinks" title="Drinks" />
             </Route>
             <Route path="/drinks/:id">
-              <Item items={drinks} cantFind="/drinks" />
+              <Item items={drinks} cantFind="/404" />
             </Route>
-            <Route>
+            <Route path="/404">
               <p>Hmmm. I can't seem to find what you want.</p>
             </Route>
           </Switch>
