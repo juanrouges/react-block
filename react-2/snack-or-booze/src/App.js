@@ -58,6 +58,9 @@ function App() {
             <Route path="/404">
               <p>Hmmm. I can't seem to find what you want.</p>
             </Route>
+            <Route path="*">
+              <p>Hmmm. I can't seem to find what you want.</p>
+            </Route>
           </Switch>
         </main>
       </BrowserRouter>
